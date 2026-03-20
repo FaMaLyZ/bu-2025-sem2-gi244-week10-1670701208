@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
 
     public bool gameOver = false;
 
-    public MoveLeft moveLeft;
+    public bool isDash = false;
 
     void Awake()
     {
@@ -50,6 +50,16 @@ public class PlayerController : MonoBehaviour
             dirtParticle.Stop();
             playerAudio.PlayOneShot(jumpSfx);
         }   
+        if (Input.GetKeyDown(KeyCode.LeftShift) && !isDash)
+        {
+            isDash = true;
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        {   
+ 
+            isDash = false;
+        }
+        
         
     }
 

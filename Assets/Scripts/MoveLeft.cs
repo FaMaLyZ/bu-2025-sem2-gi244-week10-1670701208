@@ -2,32 +2,43 @@ using UnityEngine;
 
 public class MoveLeft : MonoBehaviour
 {
-    public float speed = 10f;
+    public float startSpeed = 10f;
+    public float curretSpeed;
+    public bool isRunning = false;
 
     private float leftBound = -15;
 
-    private PlayerController playerController;
+    [SerializeField]private PlayerController playerController;
 
-    void Start()
+    private void Start()
     {
         playerController = GameObject.Find("Player").GetComponent<PlayerController>();
+        curretSpeed = startSpeed;
     }
-
     // Update is called once per frame
     void Update()
     {
         if (!playerController.gameOver)
         {
-            transform.Translate(Vector3.left * Time.deltaTime * speed);
+            transform.Translate(Vector3.left * Time.deltaTime * curretSpeed);
         }
 
         if (transform.position.x < leftBound && gameObject.CompareTag("Obstacle"))
         {
             Destroy(gameObject);
         }
+
+        if(playerController.isDash && !isRunning)
+        {
+            curretSpeed *=2;
+            isRunning = true;
+        }
+        else if (!playerController.isDash)
+        {
+            curretSpeed = startSpeed;
+            isRunning = false;
+        }
+
     }
-    public void moveLeftDash()
-    {
-        speed *= 2 ;
-    }
+    
 }

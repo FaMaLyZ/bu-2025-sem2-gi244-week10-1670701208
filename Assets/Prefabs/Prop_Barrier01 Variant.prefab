@@ -12,6 +12,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Prop_Barrier01 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 181666, guid: ee7d0c4ddd804dd4e95f705d43c9135e, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
+      objectReference: {fileID: 0}
     - target: {fileID: 481666, guid: ee7d0c4ddd804dd4e95f705d43c9135e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 26.809267
