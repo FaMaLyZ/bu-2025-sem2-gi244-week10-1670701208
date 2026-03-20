@@ -19,8 +19,9 @@ public class PlayerController : MonoBehaviour
     private AudioSource playerAudio;
 
     public bool gameOver = false;
-
     public bool isDash = false;
+
+    public int playerHP;
 
     void Awake()
     {
@@ -72,13 +73,25 @@ public class PlayerController : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Obstacle"))
         {
-            Debug.Log("Game Over!");
-            gameOver = true;
-            playerAnim.SetBool("Death_b", true);
-            playerAnim.SetInteger("DeathType_int", 1);
-            explosionParticle.Play();
-            dirtParticle.Stop();
-            playerAudio.PlayOneShot(crashSfx);
+            if (playerHP <= 0)
+            {
+                Debug.Log("Game Over!");
+                gameOver = true;
+                playerAnim.SetBool("Death_b", true);
+                playerAnim.SetInteger("DeathType_int", 1);
+                Instantiate(explosionParticle);
+                dirtParticle.Stop();
+                playerAudio.PlayOneShot(crashSfx);
+            }
+            else 
+            {
+                Debug.Log("Player hit");
+                playerHP--;
+                Instantiate(explosionParticle);
+                playerAudio.PlayOneShot(crashSfx);
+                Destroy(collision.gameObject);
+
+            }
         }
     }
     
