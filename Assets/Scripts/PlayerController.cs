@@ -13,12 +13,14 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody rb;
     private InputAction jumpAction;
-    private bool isOnGround = true;
+    private int jumpCount = 0;
 
     private Animator playerAnim;
     private AudioSource playerAudio;
 
     public bool gameOver = false;
+
+    public MoveLeft moveLeft;
 
     void Awake()
     {
@@ -40,21 +42,22 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (jumpAction.triggered && isOnGround && !gameOver)
+        if (jumpAction.triggered && !gameOver && jumpCount <2)
         {
             rb.AddForce(jumpForce * Vector3.up, ForceMode.Impulse);
-            isOnGround = false;
+            jumpCount++;
             playerAnim.SetTrigger("Jump_trig");
             dirtParticle.Stop();
             playerAudio.PlayOneShot(jumpSfx);
-        }
+        }   
+        
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
-            isOnGround = true;
+            jumpCount = 0;
             dirtParticle.Play();
         }
         else if (collision.gameObject.CompareTag("Obstacle"))
@@ -68,5 +71,5 @@ public class PlayerController : MonoBehaviour
             playerAudio.PlayOneShot(crashSfx);
         }
     }
-
+    
 }

@@ -26,4 +26,8 @@ public class MoveLeft : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    public void moveLeftDash()
+    {
+        speed *= 2 ;
+    }
 }
